@@ -1,1 +1,13 @@
-# hse-reinforcement-learning-2017
+# Neural Networks Reinforcement Learning
+# Useful links
+* [Simple Reinforcement Learning with Tensorflow Part 0: Q-Learning with Tables and Neural Networks](https://medium.com/emergent-future/simple-reinforcement-learning-with-tensorflow-part-0-q-learning-with-tables-and-neural-networks-d195264329d0)
+* [Machine Learning for Humans, Part 5: Reinforcement Learning](https://medium.com/machine-learning-for-humans/reinforcement-learning-6eacf258b265)
+* [5 Ways to Get Started with Reinforcement Learning](https://buzzrobot.com/5-ways-to-get-started-with-reinforcement-learning-b96d1989c575)
+# Scientific articles
+* [Reinforcement Learning: An Introduction](http://incompleteideas.net/sutton/book/bookdraft2017june.pdf)
+# Examples
+* https://github.com/dennybritz/reinforcement-learning
+* https://github.com/Tantun/AIVoid
+* https://github.com/yukezhu/tensorflow-reinforce
+* https://github.com/zsdonghao/tensorlayer
+* https://github.com/zsdonghao/seq2seq-chatbot
