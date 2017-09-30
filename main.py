@@ -1,3 +1,4 @@
+import argparse
 from PIL import Image
 import gym
 import numpy as np
@@ -13,28 +14,15 @@ from rl.memory import SequentialMemory
 from rl.core import Processor
 from rl.callbacks import FileLogger, ModelIntervalCheckpoint
 
-INPUT_SHAPE = (250, 250)
-# INPUT_SHAPE = (160, 250)
+INPUT_SHAPE = (84, 84)
 WINDOW_LENGTH = 4
 
 ENV_NAME = 'Tennis-v0'
-MODE = 'train'
-
-def make_square(im, min_size=250, fill_color=(0, 0, 0, 0)):
-    x, y = im.size
-    size = max(min_size, x, y)
-    new_im = Image.new('RGBA', (size, size), fill_color)
-    new_x = int((size - x) / 2)
-    new_y = int((size - y) / 2)
-    # print('In make_square func. x = {}, y = {}'.format(new_x, new_y))
-    new_im.paste(im, (new_x, new_y))
-    return new_im
 
 class AtariProcessor(Processor):
     def process_observation(self, observation):
         assert observation.ndim == 3  # (height, width, channel)
         img = Image.fromarray(observation)
-        img = make_square(img)
         img = img.resize(INPUT_SHAPE).convert('L')  # resize and convert to grayscale
         processed_observation = np.array(img)
         # print('Before shape assertion: {} == {}'.format(processed_observation.shape, INPUT_SHAPE))
@@ -51,24 +39,18 @@ class AtariProcessor(Processor):
     def process_reward(self, reward):
         return np.clip(reward, -1., 1.)
 
+# Parse command line arguments
+parser = argparse.ArgumentParser()
+parser.add_argument('--mode', choices=['train', 'test'], default='train')
+parser.add_argument('--weights', type=str, default=None)
+args = parser.parse_args()
+
 # Get the environment and extract the number of actions.
 env = gym.make(ENV_NAME)
 np.random.seed(123)
 env.seed(123)
 nb_actions = env.action_space.n
 
-input_shape = (WINDOW_LENGTH,) + INPUT_SHAPE
-model = Sequential()
-if K.image_dim_ordering() == 'tf':
-    # (width, height, channels)
-    model.add(Permute((2, 3, 1), input_shape=input_shape))
-elif K.image_dim_ordering() == 'th':
-    # (channels, width, height)
-    model.add(Permute((1, 2, 3), input_shape=input_shape))
-else:
-    raise RuntimeError('Unknown image_dim_ordering.')
-
-# Next, we build our model. We use the same model that was described by Mnih et al. (2015).
 input_shape = (WINDOW_LENGTH,) + INPUT_SHAPE
 model = Sequential()
 if K.image_dim_ordering() == 'tf':
@@ -116,7 +98,7 @@ dqn = DQNAgent(model=model, nb_actions=nb_actions, policy=policy, memory=memory,
                train_interval=4, delta_clip=1.)
 dqn.compile(Adam(lr=.00025), metrics=['mae'])
 
-if MODE == 'train':
+if args.mode == 'train':
     # Okay, now it's time to learn something! We capture the interrupt exception so that training
     # can be prematurely aborted. Notice that you can the built-in Keras callbacks!
     weights_filename = 'dqn_{}_weights.h5f'.format(ENV_NAME)
@@ -131,7 +113,9 @@ if MODE == 'train':
 
     # Finally, evaluate our algorithm for 10 episodes.
     dqn.test(env, nb_episodes=10, visualize=False)
-elif MODE == 'test':
+elif args.mode == 'test':
     weights_filename = 'dqn_{}_weights.h5f'.format(ENV_NAME)
+    if args.weights:
+        weights_filename = args.weights
     dqn.load_weights(weights_filename)
     dqn.test(env, nb_episodes=10, visualize=True)
