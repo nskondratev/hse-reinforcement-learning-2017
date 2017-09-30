@@ -1,5 +1,5 @@
 import gym
-env = gym.make('Tennis-ram-v0')
+env = gym.make('Tennis-v0')
 env.reset()
 
 print('Actions space: {}'.format(env.action_space))
