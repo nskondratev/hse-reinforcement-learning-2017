@@ -13,6 +13,7 @@ To get knowledge about Reinforcement Learning with neural networks and implement
 * [5 Ways to Get Started with Reinforcement Learning](https://buzzrobot.com/5-ways-to-get-started-with-reinforcement-learning-b96d1989c575)
 ### Scientific articles
 * [Reinforcement Learning: An Introduction](http://incompleteideas.net/sutton/book/bookdraft2017june.pdf)
+* [Mnih, Volodymyr, et al. "Human-level control through deep reinforcement learning." Nature 518.7540 (2015): 529-533.](https://github.com/nskondratev/hse-reinforcement-learning-2017/raw/master/info/mnih2015.pdf)
 ### Examples
 * https://github.com/dennybritz/reinforcement-learning
 * https://github.com/Tantun/AIVoid
