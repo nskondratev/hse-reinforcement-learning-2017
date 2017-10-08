@@ -29,12 +29,23 @@ To get knowledge about Reinforcement Learning with neural networks and implement
 $ pip3 install keras-rl tensorflow numpy h5py gym gym[atari]
 ```
 
+If you want to visualize logs, you also need to install matplotlib:
+```bash
+$ pip3 install matplotlib
+```
+
 ### Run
 #### Training mode
 ```bash
-python3 main.py --mode train
+$ python3 main.py --mode train
 ```
 #### Test mode
 ```bash
-python3 main.py --mode test
+$ python3 main.py --mode test
+```
+
+### Visualize log file
+Example command:
+```bash
+$ python3 visualize_log.py --figsize 30 30 --output "train_2017-10-01.jpg" "runs/2017-10-01/dqn_Tennis-v0_log.json"
 ```
