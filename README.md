@@ -23,10 +23,16 @@ To get knowledge about Reinforcement Learning with neural networks and implement
 
 ## Usage
 ### Prerequisites
+* Linux Ubuntu (tested on 16.04.3): gym[atari] not available on Windows
 * Python 3.5.2
-* installed packages: keras-rl, tensorflow, numpy, h5py, gym, gym\[atari\]
+* Pip 9.0.1
+* Installed packages: keras-rl, tensorflow, numpy, h5py, gym, gym\[atari\]
+
+To install needed packages run the following commands:
 ```bash
-$ pip3 install keras-rl tensorflow numpy h5py gym gym[atari]
+$ sudo apt-get update && sudo apt-get install python3 python3-pip
+$ pip3 install keras-rl tensorflow numpy h5py gym
+$ pip3 install gym[atari]
 ```
 
 If you want to visualize logs, you also need to install matplotlib:
