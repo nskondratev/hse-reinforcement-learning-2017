@@ -21,6 +21,27 @@ To get knowledge about Reinforcement Learning with neural networks and implement
 * https://github.com/zsdonghao/tensorlayer
 * https://github.com/zsdonghao/seq2seq-chatbot
 
+## Project structure
+The structure of our project is the following:
+* **info** - the directory with the article that contains model description.
+* **presentations** - the directory with our slides.
+* **runs** - the directory with training logs and weights grouped by date.
+* **train_results** - the directory that contains visualized training logs.
+* **atari_processor.py** - script with AtariProcessor class implementation. AtariProcessor class is used for processing environment observations and rewards.
+* **main.py** - main script that is used for launching training or testing. Also contains model initialization.
+* **visualize_log.py** - script for visualizing training logs.
+
+## Used environments
+We are using [OpenAI Gym](https://gym.openai.com/read-only.html) environments in this project.
+We provide trained models for the following environments:
+* [Atari Boxing](https://gym.openai.com/envs/Boxing-v0/)
+* [Atari Pong](https://gym.openai.com/envs/Pong-v0)
+* [Atari Robotank](https://gym.openai.com/envs/Robotank-v0)
+* [Atari Tennis](https://gym.openai.com/envs/Tennis-v0)
+
+All of this environments provides an RGB image of the screen as an observation on each step.
+The input image is an array of shape (210, 160, 3).
+
 ## Usage
 ### Prerequisites
 * Linux Ubuntu (tested on 16.04.3): gym[atari] not available on Windows
@@ -40,18 +61,81 @@ If you want to visualize logs, you also need to install matplotlib:
 $ pip3 install matplotlib
 ```
 
+We advise you to use [virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/en/latest/), so you can have isolated python environments with their own packages.
+
 ### Run
 #### Training mode
+To run DQN model in training mode you should run *main.py* script and provide argument *--mode* with the *train* value.
+You also need to specify environment with the *--env* argument.
+
+Example:
 ```bash
-$ python3 main.py --mode train
+$ python3 main.py --mode train --env Boxing-v0
 ```
 #### Test mode
+To run DQN model in training mode you should run *main.py* script and provide argument *--mode* with the *test* value.
+You also need to specify environment with the *--env* argument.
+By default, script will search for weights of trained model in *trained_models* directory, but you can provide custom weights by specifying *--weights* argument with the path to weights file.
+
+Example:
 ```bash
-$ python3 main.py --mode test
+$ python3 main.py --mode test -- env Boxing-v0
 ```
 
 ### Visualize log file
-Example command:
+After training is finished you can use the generated log file to visualize training process.
+To generate charts you need to run *visualize_log.py* script and specify the following arguments:
+* **--figsize** - the size of each chart,
+* **--output** - the path to output image,
+* **log_filename** - the path to the log file.
+
+Example:
 ```bash
 $ python3 visualize_log.py --figsize 30 30 --output "train_2017-10-01.jpg" "runs/2017-10-01/dqn_Tennis-v0_log.json"
 ```
+
+## Experiments
+We used DQN algorithm implementation in [Keras-RL](http://keras-rl.readthedocs.io/en/latest/agents/dqn/) package.
+Hyperparameters are described in Mnih et al. (2015).
+
+We trained four Open AI Gym Atari environments with the same hyperparameters and the same model architecture.
+
+| Environment 	| # of steps 	|
+|-------------	|------------	|
+| Boxing-v0   	| 10 000 000 	|
+| Pong-v0     	| 5 000 000  	|
+| Robotank-v0 	| 3 000 000  	|
+| Tennis-v0   	| 10 000 000 	|
+
+### Boxing-v0
+The trained agent in Boxing-v0 environment gain the following average reward value: 23.7
+
+#### Demo:
+
+![Boxing demo](https://raw.githubusercontent.com/nskondratev/hse-reinforcement-learning-2017/master/trained_models_demo/Boxing.gif)
+
+### Pong-v0
+The trained agent in Pong-v0 environment gain the following average reward value:
+
+#### Demo:
+
+![Pong demo]()
+
+### Robotank-v0
+The trained agent in Robotank-v0 environment gain the following average reward value: 8.4
+
+#### Demo:
+
+![Robotank demo](https://github.com/nskondratev/hse-reinforcement-learning-2017/raw/master/trained_models_demo/Robotank.gif)
+
+### Tennis-v0
+The trained agent in Tennis-v0 environment, unfortunately, decided not to play tennis at all. So that it can not gain the negative reward.
+Proposed solution: to train agent on 50 million steps.
+
+#### Demo:
+
+![Tennis demo](https://github.com/nskondratev/hse-reinforcement-learning-2017/raw/master/trained_models_demo/Tennis.gif)
+
+## Further work
+To get better results the number of iterations in training need to be increased to at least 50 million steps. Furthermore, some environments has best results with the agents, that were trained on 80 million steps.
+
