@@ -1,4 +1,5 @@
 import argparse
+import os
 
 import gym
 import numpy as np
@@ -15,6 +16,7 @@ from rl.memory import SequentialMemory
 from rl.callbacks import FileLogger, ModelIntervalCheckpoint
 from atari_processor import AtariProcessor
 
+TRAINED_MODELS_DIR = 'trained_models'
 INPUT_SHAPE = (84, 84)
 WINDOW_LENGTH = 4
 
@@ -81,7 +83,7 @@ if args.mode == 'train':
     # Evaluate our algorithm for 10 episodes.
     dqn.test(env, nb_episodes=10, visualize=False)
 elif args.mode == 'test':
-    weights_filename = 'dqn_{}_weights.h5f'.format(args.env)
+    weights_filename = os.path.join(TRAINED_MODELS_DIR, 'dqn_{}_weights.h5f'.format(args.env))
     if args.weights:
         weights_filename = args.weights
     dqn.load_weights(weights_filename)
