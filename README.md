@@ -1,4 +1,6 @@
 # Neural Networks Reinforcement Learning
+## Final presentation
+You can download our final presentation [here](https://github.com/nskondratev/hse-reinforcement-learning-2017/raw/master/presentations/Neural%20Networks%20Reinforcement%20Learning.pdf).
 ## Goal of the project
 To get knowledge about Reinforcement Learning with neural networks and implement Atari Tennis AI bot with the use of RL.
 ## Members
@@ -35,7 +37,6 @@ The structure of our project is the following:
 We are using [OpenAI Gym](https://gym.openai.com/read-only.html) environments in this project.
 We provide trained models for the following environments:
 * [Atari Boxing](https://gym.openai.com/envs/Boxing-v0/)
-* [Atari Pong](https://gym.openai.com/envs/Pong-v0)
 * [Atari Robotank](https://gym.openai.com/envs/Robotank-v0)
 * [Atari Tennis](https://gym.openai.com/envs/Tennis-v0)
 
@@ -98,12 +99,11 @@ $ python3 visualize_log.py --figsize 30 30 --output "train_2017-10-01.jpg" "runs
 We used DQN algorithm implementation in [Keras-RL](http://keras-rl.readthedocs.io/en/latest/agents/dqn/) package.
 Hyperparameters are described in Mnih et al. (2015).
 
-We trained four Open AI Gym Atari environments with the same hyperparameters and the same model architecture.
+We trained agents in three Open AI Gym Atari environments with the same hyperparameters and the same model architecture.
 
 | Environment 	| # of steps 	|
 |-------------	|------------	|
 | Boxing-v0   	| 10 000 000 	|
-| Pong-v0     	| 5 000 000  	|
 | Robotank-v0 	| 3 000 000  	|
 | Tennis-v0   	| 10 000 000 	|
 
@@ -113,13 +113,6 @@ The trained agent in Boxing-v0 environment gain the following average reward val
 #### Demo:
 
 ![Boxing demo](https://raw.githubusercontent.com/nskondratev/hse-reinforcement-learning-2017/master/trained_models_demo/Boxing.gif)
-
-### Pong-v0
-The trained agent in Pong-v0 environment gain the following average reward value:
-
-#### Demo:
-
-![Pong demo]()
 
 ### Robotank-v0
 The trained agent in Robotank-v0 environment gain the following average reward value: 8.4
